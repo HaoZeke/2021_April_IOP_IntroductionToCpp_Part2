@@ -42,5 +42,13 @@ endif()
  
 set (CMAKE_CXX_STANDARD 11)
 
+# --- Library
+set(headers "${CMAKE_CURRENT_SOURCE_DIR}/include/math_types/iop_vec.hpp")
+set(sources "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp")
+
 # Build
-add_executable(simulation.exe src/main.cpp)
+add_executable(simulation.exe ${sources})
+
+target_include_directories(
+  simulation.exe PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
+)

@@ -1,33 +1,9 @@
+#include <math_types/iop_vec.hpp>
+
 #include <cmath>
 #include <iostream>
 #include <vector>
 
-class Vector3
-{
-    public:
-    double x;
-    double y;
-    double z;
-    Vector3()
-    {
-        x = 0;
-        y = 0;
-        z = 0;
-    }
-    Vector3(double _x, double _y, double _z)
-    {
-        x = _x;
-        y = _y;
-        z = _z;
-    }
-    Vector3& operator+=(const Vector3& rhs)
-    {
-        x+=rhs.x;
-        y+=rhs.y;
-        z+=rhs.z;
-        return *this;
-    }
-};
 
 /*
 int main()
