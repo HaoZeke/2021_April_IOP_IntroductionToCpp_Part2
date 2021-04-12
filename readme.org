@@ -1,5 +1,7 @@
-* IOP Intermediate Workshop on C++
+* 2021 April IOP Introduction To C++ Part 2
 This repository is meant to demonstrate the course content covered in the second C++ section of the [[https://www.iopconferences.org/iop/frontend/reg/tOtherPage.csp?pageID=1032743&eventID=1664][IOP Student Community organized 4-part online coding workshops series: R, C++ and Julia]].
+** Pre-requisite
+The first of the two C++ workshops was led ably by Dr. Joseph McKenna and the files [[https://github.com/josephmckenna/2021_April_IOP_IntroductionToCpp_Part1][are present here]].
 * License
 - Code samples :: [[https://opensource.org/licenses/MIT][MIT license]]
 - Presentation materials :: [[https://creativecommons.org/licenses/by-nc/4.0/][CC BY-NC 4.0]]
