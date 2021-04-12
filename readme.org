@@ -1,0 +1,5 @@
+* IOP Intermediate Workshop on C++
+This repository is meant to demonstrate the course content covered in the second C++ section of the [[https://www.iopconferences.org/iop/frontend/reg/tOtherPage.csp?pageID=1032743&eventID=1664][IOP Student Community organized 4-part online coding workshops series: R, C++ and Julia]].
+* License
+- Code samples :: [[https://opensource.org/licenses/MIT][MIT license]]
+- Presentation materials :: [[https://creativecommons.org/licenses/by-nc/4.0/][CC BY-NC 4.0]]
