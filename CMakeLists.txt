@@ -43,7 +43,10 @@ endif()
 set (CMAKE_CXX_STANDARD 11)
 
 # --- Library
-set(headers "${CMAKE_CURRENT_SOURCE_DIR}/include/math_types/iop_vec.hpp")
+set(headers
+  "include/data_types/iop_vec.hpp"
+  "include/data_types/iop_particle.hpp"
+  )
 set(sources "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp")
 
 # Build

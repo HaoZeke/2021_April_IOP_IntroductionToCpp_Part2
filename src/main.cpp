@@ -1,4 +1,5 @@
-#include <math_types/iop_vec.hpp>
+#include <data_types/iop_vec.hpp>
+#include <data_types/iop_particle.hpp>
 
 #include <cmath>
 #include <iostream>
@@ -8,9 +9,9 @@
 /*
 int main()
 {
-    Vector3 a{1,2,3};
+    iopdat::Vector3 a{1,2,3};
     return sizeof(a);
-    Vector3 b{4,5,6};
+    iopdat::Vector3 b{4,5,6};
     b+=a;
     return b.x;
 
@@ -18,36 +19,17 @@ int main()
 */
 //int main()
 //{
-//    Vector3 v(1.,3.,4.);
+//    iopdat::Vector3 v(1.,3.,4.);
 //    std::cout<< v.x <<"\t"<<v.y<<"\t"<<"\n";
-//    v+=Vector3(6,7,8);
+//    v+=iopdat::Vector3(6,7,8);
 //    std::cout<< v.x <<"\t"<<v.y<<"\t"<<"\n";
 //    std::cout<<sizeof(v.x) << "\t"<<sizeof(v)<<"\n";
 //}
 
-class Particle
-{
-public:
-    Vector3 position;
-    Vector3 velocity;
-    double charge;
-    double mass;
-public:
-    Particle(double c, double m):
-       charge(c), mass(m)
-    {
-
-    }
-    void Print()
-    {
-        std::cout<<"Charge: "<< charge<< " Mass: "<<mass<<"\n";
-    }
-};
-
 //int main()
 //{
-//    Particle electron(0.1,0.5);
-//    Particle proton(12,34);
+//    iopdat::Particle electron(0.1,0.5);
+//    iopdat::Particle proton(12,34);
 //    std::cout<<"electron:";
 //    electron.Print();
 //    return 0;
@@ -56,7 +38,7 @@ public:
 class PhysicsProcess
 {
     public:
-    virtual Vector3 Force(Particle p) = 0;
+    virtual iopdat::Vector3 Force(iopdat::Particle p) = 0;
 };
 
 
@@ -69,20 +51,20 @@ public:
     {
 
     }
-    Vector3 Force(Particle p)
+    iopdat::Vector3 Force(iopdat::Particle p)
     {
        // F = m * g
-       return Vector3( 0, p.mass*g, 0 );
+       return iopdat::Vector3( 0, p.mass*g, 0 );
     }
 };
 
 //Test gravity force
 //int main()
 //{
-//   Particle electron(-1.60217646E-19, 9.1093837015E-31);
-//   Particle proton(  +1.60217646E-19, 1.67262192369E-27);
+//   iopdat::Particle electron(-1.60217646E-19, 9.1093837015E-31);
+//   iopdat::Particle proton(  +1.60217646E-19, 1.67262192369E-27);
 //   Gravity g;
-//   Vector3 F=g.Force(proton);
+//   iopdat::Vector3 F=g.Force(proton);
 //   std::cout<< F.x <<"\t"<<F.y<<"\t"<<"\n";
 //   // F = m * a;
 //   // a = F / m;
@@ -94,7 +76,7 @@ class TimeStepper
 {
 private:
     std::vector<PhysicsProcess*> physics_list;
-    Particle p;
+    iopdat::Particle p;
     double dt;
 public:
     TimeStepper(double time_step_size, double charge, double mass):
@@ -106,14 +88,14 @@ public:
     {
        physics_list.push_back(process);
     }
-    void Setup(Vector3 position, Vector3 Velocity)
+    void Setup(iopdat::Vector3 position, iopdat::Vector3 Velocity)
     {
         p.position = position;
         p.velocity = Velocity;
     }
     void Step()
     {
-       Vector3 F(0,0,0);
+       iopdat::Vector3 F(0,0,0);
        for (int i =0 ; i< physics_list.size(); i++)
        {
            F += physics_list.at(i)->Force(p);
@@ -121,7 +103,7 @@ public:
        //F = m * a
        //F = m * v * dt
        //dv = F / m
-       Vector3 dv(
+       iopdat::Vector3 dv(
            dt * F.x / p.mass, 
            dt * F.y / p.mass, 
            dt * F.z / p.mass
@@ -129,7 +111,7 @@ public:
        p.velocity += dv;
 
        //x = v * dt
-       p.position += Vector3(
+       p.position += iopdat::Vector3(
            p.velocity.x * dt,
            p.velocity.y * dt,
            p.velocity.z * dt
@@ -145,7 +127,7 @@ public:
 {
    TimeStepper ElectronStepper(0.001,-1.60217646E-19, 9.1093837015E-31);
 
-   ElectronStepper.Setup(Vector3(0,1,2), Vector3(0,4,0));
+   ElectronStepper.Setup(iopdat::Vector3(0,1,2), iopdat::Vector3(0,4,0));
    //TimeStepper ProtonStepper(0.00001,  +1.60217646E-19, 1.67262192369E-27);
    ElectronStepper.AddProcess(new Gravity());
    for (int i=0; i<100000; i++)
@@ -160,18 +142,18 @@ public:
 class UniformB: public PhysicsProcess
 {
     private:
-    Vector3 B;
+    iopdat::Vector3 B;
     public:
-    UniformB(Vector3 Field):
+    UniformB(iopdat::Vector3 Field):
         B( Field.x,
             Field.y,
             Field.z )
     {
     }
-    Vector3 Force(Particle p)
+    iopdat::Vector3 Force(iopdat::Particle p)
     {
         //F = qV x B
-        return Vector3( 
+        return iopdat::Vector3( 
             p.charge*( p.velocity.y*B.z - p.velocity.z*B.y),
             p.charge*( p.velocity.z*B.x - p.velocity.x*B.z),
             p.charge*( p.velocity.x*B.y - p.velocity.y*B.x)
@@ -183,9 +165,9 @@ class PointCharge: public PhysicsProcess
 {
     private:
     double Q;
-    Vector3 origin;
+    iopdat::Vector3 origin;
     public:
-    PointCharge(int Charge, Vector3 position )
+    PointCharge(int Charge, iopdat::Vector3 position )
     {
         //Q = C*V
         Q = 1.60217646E-19*Charge;
@@ -193,10 +175,10 @@ class PointCharge: public PhysicsProcess
         origin.y = position.y;
         origin.z = position.z;
     }
-    Vector3 Force(Particle p)
+    iopdat::Vector3 Force(iopdat::Particle p)
     {
         // F = (Ke * Q * q / r^3) * R
-        Vector3 R(
+        iopdat::Vector3 R(
             p.position.x - origin.x,
             p.position.y - origin.y,
             p.position.z - origin.z
@@ -205,7 +187,7 @@ class PointCharge: public PhysicsProcess
             std::sqrt(R.x*R.x + R.y*R.y + R.z*R.z);
         double r3 = r*r*r;
         double F = -8.988E9*Q*p.charge/r3;
-        return Vector3(F*R.x,F*R.y,F*R.z);
+        return iopdat::Vector3(F*R.x,F*R.y,F*R.z);
     }
 };
 
@@ -224,14 +206,14 @@ class electrode: public PhysicsProcess
             points.push_back(
                 PointCharge(
                     Charge,
-                    Vector3(dx,dy,z)
+                    iopdat::Vector3(dx,dy,z)
                     )
                 );
         }
     }
-    Vector3 Force(Particle p)
+    iopdat::Vector3 Force(iopdat::Particle p)
     {
-        Vector3 Force = {0.,0.,0.};
+        iopdat::Vector3 Force = {0.,0.,0.};
         for (PointCharge& point: points)
         {
             Force += point.Force(p);
@@ -249,12 +231,12 @@ int main()
 {
    TimeStepper ProtonStepper(1E-9,-1.60217646E-19, 1.67262192369E-27);
    //TimeStepper ElectronStepper(1E-9,-1.60217646E-19, 9.1093837015E-31);
-//   Particle proton(  +1.60217646E-19, 1.67262192369E-27);
-   ProtonStepper.Setup(Vector3(0,0.01,0), Vector3(0,10,20));
+//   iopdat::Particle proton(  +1.60217646E-19, 1.67262192369E-27);
+   ProtonStepper.Setup(iopdat::Vector3(0,0.01,0), iopdat::Vector3(0,10,20));
    ProtonStepper.AddProcess(new Gravity());
    ProtonStepper.AddProcess(new electrode(10,0.02,0.02));
    ProtonStepper.AddProcess(new electrode(10,0.02,-0.02));
-   ProtonStepper.AddProcess(new UniformB(Vector3(0,0,0.0001)));
+   ProtonStepper.AddProcess(new UniformB(iopdat::Vector3(0,0,0.0001)));
    std::cout<<"[ x y z ]"<<"\n";
    for (int i=0; i<5E7; i++)
    {
