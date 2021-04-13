@@ -22,9 +22,9 @@ jobs:
             OS: ubuntu-latest
           - BUILD_TYPE: Debug
             OS: macos-latest
-          - BUILD_TYPE: Debug
-            ARCH: x86_64
-            OS: windows-latest
+          # - BUILD_TYPE: Debug
+          #   ARCH: x86_64
+          #   OS: windows-latest
     steps:
     - uses: actions/checkout@v2
 
