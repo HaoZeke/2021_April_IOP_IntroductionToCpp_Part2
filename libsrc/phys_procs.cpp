@@ -32,3 +32,7 @@ void physproc::TimeStepper::Print() {
   std::cout << "[ " << p.position.x << " " << p.position.y << " "
             << p.position.z << " ]\n";
 }
+
+double physproc::TimeStepper::getX() { return p.position.x; }
+double physproc::TimeStepper::getY() { return p.position.y; }
+double physproc::TimeStepper::getZ() { return p.position.z; }

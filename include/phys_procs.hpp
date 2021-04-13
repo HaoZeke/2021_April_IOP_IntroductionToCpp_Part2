@@ -37,6 +37,9 @@ public:
   void Setup(iopdat::Vector3 position, iopdat::Vector3 Velocity);
   void Step();
   void Print();
+  double getX();
+  double getY();
+  double getZ();
 };
 
 class UniformB : public PhysicsProcess {
