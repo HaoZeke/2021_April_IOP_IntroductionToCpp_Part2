@@ -17,6 +17,9 @@ if(PROJECT_SOURCE_DIR STREQUAL PROJECT_BINARY_DIR)
   )
 endif()
 
+# --- Helpers
+include(cmake/CPM.cmake)
+
 # --- Variables
 
 if(NOT CMAKE_BUILD_TYPE)
@@ -68,3 +71,8 @@ add_library(
 target_include_directories(
   ioplib PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
 )
+
+# Catch2
+include(CTest)
+add_subdirectory(tests)
+enable_testing()
