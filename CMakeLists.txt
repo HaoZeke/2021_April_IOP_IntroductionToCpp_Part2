@@ -49,9 +49,22 @@ set(headers
   )
 set(sources "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp")
 
+
 # Build
 add_executable(simulation.exe ${sources})
-
 target_include_directories(
   simulation.exe PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
+)
+
+# Build order
+add_dependencies(simulation.exe ioplib)
+# Libraries
+target_link_libraries(simulation.exe ioplib)
+# Dependencies
+add_library(
+  ioplib SHARED
+  "libsrc/phys_procs.cpp"
+  )
+target_include_directories(
+  ioplib PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
 )
