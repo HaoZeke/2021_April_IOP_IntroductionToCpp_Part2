@@ -20,6 +20,13 @@ endif()
 # --- Helpers
 include(cmake/CPM.cmake)
 
+# -- External
+CPMAddPackage(
+  NAME pybind11
+  GITHUB_REPOSITORY pybind/pybind11
+  GIT_TAG v2.6.1
+)
+
 # --- Variables
 
 if(NOT CMAKE_BUILD_TYPE)
@@ -62,7 +69,8 @@ target_include_directories(
 # Build order
 add_dependencies(simulation.exe ioplib)
 # Libraries
-target_link_libraries(simulation.exe ioplib)
+target_link_libraries(simulation.exe ioplib pybind11::embed)
+ 
 # Dependencies
 add_library(
   ioplib SHARED
